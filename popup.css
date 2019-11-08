@@ -1,0 +1,55 @@
+body {
+  width: 400px;
+  height: 200px;
+  text-align: center;
+  background-color: lightblue;
+  position: relative;
+}
+
+button {
+  padding: 10px;
+}
+
+header h1 {
+}
+
+#numPanel {
+  margin: 10px;
+  width: 90%;
+  margin: 0 auto;
+}
+
+#numPanel p {
+  display: inline;
+  font-size: 30px;
+  font-family: serif;
+  transform: scaleY(0.7);
+  transform-origin: 0 0;
+}
+
+#numPanel div {
+  display: inline-block;
+  width: 30%;
+
+}
+
+#numPanel button {
+  display: block;
+  width: 50%;
+  margin: auto;
+  height: 30px;
+
+}
+
+#setSection {
+  width: 100%;
+  margin-top: 15px;
+
+}
+
+#setSection button {
+  border: 1px solid grey;
+  border-radius: 5px;
+  background-color: lightgrey;
+  color: rgb(64,64,64);
+}
