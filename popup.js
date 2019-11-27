@@ -4,6 +4,8 @@ let seconds = 00;
 let hoursTimeLabel = document.getElementById("hoursTimer");
 let minutesTimeLabel = document.getElementById("minutesTimer");
 let secondsTimeLabel = document.getElementById("secondsTimer");
+let time;
+let timerVar;
 // -------------------------------
 let increaseHoursBtn = document.getElementById("increaseHoursButton");
 let increaseMinutesBtn = document.getElementById("increaseMinutesButton");
@@ -30,7 +32,27 @@ decreaseMinutesBtn.addEventListener("click", () => {
 decreaseSecondsBtn.addEventListener("click", () => {
   decreaseTime("seconds");
 });
+// -------------------------------
+let startTimerBtn = document.getElementById("startTimerButton");
+let pauseTimerBtn = document.getElementById("pauseTimerButton");
+let stopTimerBtn = document.getElementById("stopTimerButton");
+startTimerBtn.addEventListener("click", () => {
+  time = (hours * 3600) + (minutes * 60) + (seconds);
+  timerVar = setInterval(timer, 1000);
+});
+pauseTimerBtn.addEventListener("click", () => {
+  window.clearInterval(timerVar);
+});
+stopTimerBtn.addEventListener("click", () => {
+  window.clearInterval(timerVar);
+  hours = 0;
+  minutes = 0;
+  seconds = 0;
+  hoursTimeLabel.innerHTML = hours;
+  minutesTimeLabel.innerHTML = minutes;
+  secondsTimeLabel.innerHTML = seconds;
 
+});
 function increaseTime(button) {
   if(button == "hours") {
     if(hours == 24) {
@@ -89,5 +111,24 @@ function decreaseTime(button) {
       seconds--;
     }
     secondsTimeLabel.innerHTML = seconds;
+  }
+}
+
+function timer() {
+  time = time - 1;
+  //seconds--;
+  hoursTimeLabel.innerHTML = Math.floor((time/3600)%24);
+  minutesTimeLabel.innerHTML = Math.floor((time/60) % 60);
+  secondsTimeLabel.innerHTML = Math.floor(time % 60);
+  //secondsTimeLabel.innerHTML = seconds;
+  if(time < 0) {
+    window.clearInterval(timerVar);
+    hours = 0;
+    minutes = 0;
+    seconds = 0;
+    hoursTimeLabel.innerHTML = hours;
+    minutesTimeLabel.innerHTML = minutes;
+    secondsTimeLabel.innerHTML = seconds;
+    alert("Times up!");
   }
 }
