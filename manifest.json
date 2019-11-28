@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "Timer",
-    "version": "1.0",
+    "version": "0.7",
     "description": "A simple timer extension.",
     "icons": {
         "16": "timer16icon.png"

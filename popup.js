@@ -1,6 +1,6 @@
-let hours = 00;
-let minutes = 00;
-let seconds = 00;
+let hours = 0;
+let minutes = 0;
+let seconds = 0;
 let hoursTimeLabel = document.getElementById("hoursTimer");
 let minutesTimeLabel = document.getElementById("minutesTimer");
 let secondsTimeLabel = document.getElementById("secondsTimer");
@@ -38,10 +38,19 @@ let pauseTimerBtn = document.getElementById("pauseTimerButton");
 let stopTimerBtn = document.getElementById("stopTimerButton");
 startTimerBtn.addEventListener("click", () => {
   time = (hours * 3600) + (minutes * 60) + (seconds);
-  timerVar = setInterval(timer, 1000);
+  if(time == 0) {
+    alert("Please enter a valid time.");
+  }
+  else {
+    timerVar = setInterval(timer, 1000);
+    switchToTimerMode();
+  }
 });
 pauseTimerBtn.addEventListener("click", () => {
   window.clearInterval(timerVar);
+  pauseOrResume();
+  //time = (hours * 3600) + (minutes * 60) + (seconds);
+  //timerVar = setInterval(timer, 1000);
 });
 stopTimerBtn.addEventListener("click", () => {
   window.clearInterval(timerVar);
@@ -51,12 +60,13 @@ stopTimerBtn.addEventListener("click", () => {
   hoursTimeLabel.innerHTML = hours;
   minutesTimeLabel.innerHTML = minutes;
   secondsTimeLabel.innerHTML = seconds;
+  switchToInputMode();
 
 });
 function increaseTime(button) {
   if(button == "hours") {
-    if(hours == 24) {
-      hours = 00;
+    if(hours >= 23) {
+      hours = 0;
     }
     else {
       hours++;
@@ -65,8 +75,8 @@ function increaseTime(button) {
     hoursTimeLabel.innerHTML = hours;
   }
   else if(button == "minutes") {
-    if(minutes == 60) {
-      minutes = 00;
+    if(minutes >= 59) {
+      minutes = 0;
     }
     else {
       minutes++;
@@ -74,8 +84,8 @@ function increaseTime(button) {
     minutesTimeLabel.innerHTML = minutes;
   }
   else if(button == "seconds") {
-    if(seconds == 60) {
-      seconds = 00;
+    if(seconds >= 59) {
+      seconds = 0;
     }
     else {
       seconds++;
@@ -86,8 +96,8 @@ function increaseTime(button) {
 
 function decreaseTime(button) {
   if(button == "hours") {
-    if(hours == 0) {
-      hours = 24;
+    if(hours <= 0) {
+      hours = 23;
     }
     else {
       hours--;
@@ -95,8 +105,8 @@ function decreaseTime(button) {
     hoursTimeLabel.innerHTML = hours;
   }
   else if(button == "minutes") {
-    if(minutes == 0) {
-      minutes = 60;
+    if(minutes <= 0) {
+      minutes = 59;
     }
     else {
       minutes--;
@@ -104,8 +114,8 @@ function decreaseTime(button) {
     minutesTimeLabel.innerHTML = minutes;
   }
   else if(button == "seconds") {
-    if(seconds == 0) {
-      seconds = 60;
+    if(seconds <= 0) {
+      seconds = 59;
     }
     else {
       seconds--;
@@ -117,7 +127,7 @@ function decreaseTime(button) {
 function timer() {
   time = time - 1;
   //seconds--;
-  hoursTimeLabel.innerHTML = Math.floor((time/3600)%24);
+  hoursTimeLabel.innerHTML = Math.floor((time/3600) % 24);
   minutesTimeLabel.innerHTML = Math.floor((time/60) % 60);
   secondsTimeLabel.innerHTML = Math.floor(time % 60);
   //secondsTimeLabel.innerHTML = seconds;
@@ -130,5 +140,39 @@ function timer() {
     minutesTimeLabel.innerHTML = minutes;
     secondsTimeLabel.innerHTML = seconds;
     alert("Times up!");
+    switchToInputMode();
+  }
+}
+
+function switchToTimerMode() {
+  increaseHoursBtn.style.visibility = "hidden";
+  increaseMinutesBtn.style.visibility = "hidden";
+  increaseSecondsBtn.style.visibility = "hidden";
+  decreaseHoursBtn.style.visibility = "hidden";
+  decreaseMinutesBtn.style.visibility = "hidden";
+  decreaseSecondsBtn.style.visibility = "hidden";
+  startTimerBtn.style.display = "none";
+  pauseTimerBtn.style.visibility = "visible";
+  stopTimerBtn.style.visibility = "visible";
+}
+
+function switchToInputMode() {
+  increaseHoursBtn.style.visibility = "visible";
+  increaseMinutesBtn.style.visibility = "visible";
+  increaseSecondsBtn.style.visibility = "visible";
+  decreaseHoursBtn.style.visibility = "visible";
+  decreaseMinutesBtn.style.visibility = "visible";
+  decreaseSecondsBtn.style.visibility = "visible";
+  startTimerBtn.style.display = "block";
+  pauseTimerBtn.style.visibility = "hidden";
+  stopTimerBtn.style.visibility = "hidden";
+}
+
+function pauseOrResume() {
+  if(pauseTimerBtn.innerHTML == "Pause") {
+    pauseTimerBtn.innerHTML = "Resume";
+  }
+  else if(pauseTimerBtn.innerHTML == "Resume") {
+    pauseTimerBtn.innerHTML = "Pause";
   }
 }
